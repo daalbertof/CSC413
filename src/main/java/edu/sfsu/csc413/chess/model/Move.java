@@ -26,29 +26,35 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      * A move to an empty square.
      */
     public static Move quiet(Position from, Position to, Piece moved) {
-        throw new UnsupportedOperationException("M2: implement Move.quiet");
+        return new Move(from,to, moved, null, null);
     }
 
     /**
      * A move that removes an enemy piece from the destination square.
      */
     public static Move capture(Position from, Position to, Piece moved, Piece captured) {
-        throw new UnsupportedOperationException("M2: implement Move.capture");
+        return new Move(from, to, moved, captured, null);
     }
 
     /**
      * A pawn reaching the far rank and becoming {@code promotesTo}.
      */
     public static Move promotion(Position from, Position to, Piece moved, Piece captured, PieceType promotesTo) {
-        throw new UnsupportedOperationException("M2: implement Move.promotion");
+        return new Move(from, to, moved, captured, promotesTo);
     }
 
     public boolean isCapture() {
-        throw new UnsupportedOperationException("M2: implement Move.isCapture");
+        if(captured == null){
+            return false;
+        }
+        return true;
     }
 
     public boolean isPromotion() {
-        throw new UnsupportedOperationException("M2: implement Move.isPromotion");
+        if(promotesTo == null){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -57,6 +63,10 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      */
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("M2: implement Move.toString");
+        String position = from.toString() + to.toString();
+        if(isPromotion()){
+            position += Character.toLowerCase(promotesTo.symbol());
+        }
+        return position;
     }
 }
