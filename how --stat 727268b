@@ -1,0 +1,22 @@
+* [33m01feefd[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;33mtag: [m[1;33msubmit-m2[m[33m, [m[1;31morigin/main[m[33m)[m M2: <Changed Piece class, Main, Move, Knight&king, Rook&Bichop&Queen, and Pawn>
+* [33mee06012[m Merge branch 'main' of C:\Users\daalb\Workspace\CSC413 with conflicts.
+*   [33m1b27cd7[m Merge tag 'm2' # Please enter a commit message to explain why this merge is necessary, # especially if it merges an updated upstream into a topic branch. # # Lines starting with '#' will be ignored, and an empty message aborts # the commit.
+[32m|[m[33m\[m  
+[32m|[m * [33m0398950[m[33m ([m[1;33mtag: [m[1;33mm2[m[33m, [m[1;31mupstream/main[m[33m, [m[1;31mupstream/HEAD[m[33m)[m M2: the Piece hierarchy — six subclasses, Move, and the factories
+[32m|[m [33m|[m *   [33m72f82cc[m[33m ([m[1;35mrefs/stash[m[33m)[m On main: save work before m2
+[32m|[m [33m|[m[32m/[m[35m|[m[36m\[m  
+[32m|[m[32m/[m[33m|[m [35m|[m [36m|[m 
+[32m|[m [33m|[m [35m|[m * [33m54398c9[m untracked files on main: 727268b Merge branch 'main' of C:\Users\daalb\Workspace\CSC413 with conflicts.
+[32m|[m [33m|[m * [33m3b043f5[m index on main: 727268b Merge branch 'main' of C:\Users\daalb\Workspace\CSC413 with conflicts.
+[32m|[m [33m|[m[32m/[m  
+[32m|[m[32m/[m[33m|[m   
+* [33m|[m [33m727268b[m[33m ([m[1;33mtag: [m[1;33msubmit-m1[m[33m)[m Merge branch 'main' of C:\Users\daalb\Workspace\CSC413 with conflicts.
+* [33m|[m [33m07e8287[m Merge tag 'm1' # Please enter a commit message to explain why this merge is necessary, # especially if it merges an updated upstream into a topic branch. # # Lines starting with '#' will be ignored, and an empty message aborts # the commit.
+[1;31m|[m[33m\[m[33m|[m 
+[1;31m|[m * [33ma89a8af[m[33m ([m[1;33mtag: [m[1;33mm1[m[33m)[m M1: the domain model — PieceType, Piece, Board are yours; the view is given
+* [1;32m|[m [33m6e740d6[m[33m ([m[1;33mtag: [m[1;33msubmit-m0b[m[33m, [m[1;32mfix-m0b[m[33m)[m Fixing Position.java for M0b
+* [1;32m|[m [33mde91fd0[m M0b: Position and Color
+[1;32m|[m[1;32m/[m  
+* [33ma4f2638[m[33m ([m[1;33mtag: [m[1;33mm0b[m[33m)[m M0b: the coordinate tests arrive; Position and Color are yours
+* [33m62d7910[m[33m ([m[1;33mtag: [m[1;33mm0[m[33m)[m M0: Repo, toolchain, and a green build
+* [33m62b551a[m Initial: empty project skeleton
