@@ -1,5 +1,7 @@
 package edu.sfsu.csc413.chess.model;
 
+import edu.sfsu.csc413.chess.factory.PieceFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +34,21 @@ public class Board {
                 }
             }
         return positions;
+    }
+
+    public void apply(Move move){
+        place(move.from(), null);
+        if(move.isPromotion()){
+            Piece promoted = PieceFactory.create(move.promotesTo(), move.moved().color());
+            place(move.to(), promoted);
+        }else{
+            place(move.to(), move.moved());
+        }
+    }
+
+    public void undo(Move move){
+        place(move.from(), move.moved());
+        place(move.to(), move.captured());
     }
 
     @Override
