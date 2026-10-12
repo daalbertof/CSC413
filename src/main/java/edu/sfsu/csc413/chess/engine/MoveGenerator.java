@@ -3,7 +3,8 @@ package edu.sfsu.csc413.chess.engine;
 import edu.sfsu.csc413.chess.model.Board;
 import edu.sfsu.csc413.chess.model.Color;
 import edu.sfsu.csc413.chess.model.Move;
-
+import edu.sfsu.csc413.chess.model.Position;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public final class MoveGenerator {
      * when it tightens.
      */
     public static List<Move> legalMoves(Board board, Color color) {
-        throw new UnsupportedOperationException("M4: implement MoveGenerator.legalMoves");
+        return pseudoLegalMoves(board, color);
     }
 
     /**
@@ -54,6 +55,10 @@ public final class MoveGenerator {
      * {@code Game}.
      */
     static List<Move> pseudoLegalMoves(Board board, Color color) {
-        throw new UnsupportedOperationException("M4: implement MoveGenerator.pseudoLegalMoves");
+        List<Move> moves = new ArrayList<>();
+        for(Position i: board.positionsOf(color)){
+            moves.addAll(board.pieceAt(i).pseudoLegalMoves(board, i));
+        }
+        return moves;
     }
 }
