@@ -10,6 +10,15 @@ public class Board {
     public Board(){
     }                                      // an empty board
 
+    public Position kingPosition(Color color) {
+        for (Position position : positionsOf(color)) {
+            if (pieceAt(position).type() == PieceType.KING) {
+                return position;
+            }
+        }
+        return null;
+    }
+
     public Piece pieceAt(Position position){  // what is here? null if nothing
         return squares[position.file()][position.rank()];
     }
@@ -78,5 +87,4 @@ public class Board {
         }
         return text.toString();
     }
-
 }

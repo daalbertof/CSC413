@@ -1,9 +1,7 @@
 package edu.sfsu.csc413.chess.engine;
 
-import edu.sfsu.csc413.chess.model.Board;
-import edu.sfsu.csc413.chess.model.Color;
-import edu.sfsu.csc413.chess.model.Move;
-import edu.sfsu.csc413.chess.model.Position;
+import edu.sfsu.csc413.chess.model.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +38,35 @@ public final class MoveGenerator {
      * when it tightens.
      */
     public static List<Move> legalMoves(Board board, Color color) {
-        return pseudoLegalMoves(board, color);
+        List<Move> legal = new ArrayList<>();
+        for (Move move : pseudoLegalMoves(board, color)) {
+            board.apply(move);
+            boolean leavesKingInCheck = isInCheck(board, color);
+            board.undo(move);
+            if (!leavesKingInCheck) {
+                legal.add(move);
+            }
+        }
+        return legal;
     }
 
+    public static boolean isInCheck(Board board, Color color) {
+        Position king = board.kingPosition(color);
+        if (king == null) {
+            return false;
+        }
+        return isAttacked(board, king, color.opposite());
+    }
+
+    public static boolean isAttacked(Board board, Position target, Color attacker) {
+        for (Position position : board.positionsOf(attacker)) {
+            Piece piece = board.pieceAt(position);
+            if (piece.attacks(board, position, target)) {
+                return true;
+            }
+        }
+        return false;
+    }
     /**
      * Every geometrically possible move for {@code color}, king safety aside.
      *
