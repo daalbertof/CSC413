@@ -2,6 +2,9 @@ package edu.sfsu.csc413.chess.view;
 
 import edu.sfsu.csc413.chess.engine.Game;
 
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
 /**
  * Connects the player's decisions to the game: carry out what was asked, then
  * ask the view to redraw.
@@ -15,10 +18,16 @@ import edu.sfsu.csc413.chess.engine.Game;
  * {@code System.out}, no window, and none of the words "undo", "moves", or
  * "quit". Those belong to the view and to {@link PlayerAction#parse}.
  */
+import edu.sfsu.csc413.chess.model.Color;
+import edu.sfsu.csc413.chess.engine.Game;
+import edu.sfsu.csc413.chess.engine.GameStatus;
+import edu.sfsu.csc413.chess.model.Move;
+import edu.sfsu.csc413.chess.model.PieceType;
 public class GameController {
 
     private final Game game;
     private final BoardView view;
+    private boolean stop;
 
     public GameController(Game game, BoardView view) {
         this.game = game;
@@ -35,7 +44,10 @@ public class GameController {
      * view with {@link BoardView#start}.
      */
     public void start() {
-        throw new UnsupportedOperationException("M6: implement GameController.start");
+        stop = false;
+        view.showMessage("Chess!");
+        view.render(game);
+        view.start(this);
     }
 
     /**
@@ -46,7 +58,9 @@ public class GameController {
      * {@code start}; an event-driven view never calls it.
      */
     public void runLoop() {
-        throw new UnsupportedOperationException("M6: implement GameController.runLoop");
+        while (!stop && !game.isGameOver()) {
+            handle(view.nextAction(game));
+        }
     }
 
     /**
@@ -56,7 +70,62 @@ public class GameController {
      * it, and so will a button's click handler in M7. The handout lists what
      * each of the four actions does and what the player is told.
      */
-    public void handle(PlayerAction action) {
-        throw new UnsupportedOperationException("M6: implement GameController.handle");
+    public void handle(PlayerAction action) { //had trouble with this part....
+        switch (action) {
+            case PlayerAction.Move move -> {
+                String notation = move.notation();
+                var legalMove = game.findLegalMove(notation);
+
+                if (legalMove.isEmpty() && notation.length() == 4) {
+                    PieceType choice = view.promotionChoice(game);
+                    String promotedNotation = notation
+                            + Character.toLowerCase(choice.symbol());
+                    legalMove = game.findLegalMove(promotedNotation);
+                }
+
+                if (legalMove.isPresent()) {
+                    game.play(legalMove.get());
+                } else {
+                    view.showMessage("Not a legal move: '" + notation + "'.");
+                }
+            }
+
+            case PlayerAction.Undo ignored -> {
+                if (game.undoLastMove().isEmpty()) {
+                    view.showMessage("Nothing to undo.");
+                }
+            }
+
+            case PlayerAction.ShowMoves ignored -> {
+                String moves = game.legalMoves()
+                        .stream()
+                        .map(Move::toString)
+                        .sorted(Comparator.naturalOrder())
+                        .collect(Collectors.joining(" "));
+
+                view.showMessage(game.legalMoves().size()
+                        + " legal moves: " + moves);
+            }
+
+            case PlayerAction.Quit ignored -> {
+                stop = true;
+                view.showMessage("Goodbye.");
+                view.close();
+                return;
+            }
+        }
+
+        view.render(game);
+
+        if (game.isGameOver()) {
+            if (game.status() == GameStatus.CHECKMATE) {
+                Color winner = game.sideToMove().opposite();
+                view.showMessage("Checkmate. " + winner + " wins.");
+            } else if (game.status() == GameStatus.STALEMATE) {
+                view.showMessage("Stalemate. The game is a draw.");
+            }
+
+            view.close();
+        }
     }
 }

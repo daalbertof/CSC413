@@ -85,4 +85,20 @@ public final class MoveGenerator {
         }
         return moves;
     }
+
+    public static GameStatus status(Board board, Color sideToMove) {
+        boolean inCheck = isInCheck(board, sideToMove);
+        boolean hasLegalMoves = !legalMoves(board, sideToMove).isEmpty();
+        if (inCheck && !hasLegalMoves) {
+            return GameStatus.CHECKMATE;
+        }
+        if (!inCheck && !hasLegalMoves) {
+            return GameStatus.STALEMATE;
+        }
+        if (inCheck) {
+            return GameStatus.CHECK;
+        }
+        return GameStatus.IN_PROGRESS;
+    }
+
 }
