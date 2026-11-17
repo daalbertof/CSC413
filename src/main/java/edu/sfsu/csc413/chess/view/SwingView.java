@@ -29,7 +29,7 @@ public class SwingView implements BoardView {
 
     private static final Color LIGHT_SQUARE = new Color(238, 216, 181);
     private static final Color DARK_SQUARE = new Color(181, 136, 99);
-    private static final Color SELECTED_SQUARE = new Color(246, 246, 105);
+    private static final Color SELECTED_SQUARE = new Color(255, 170, 80);
     private static final Color LEGAL_DESTINATION = new Color(159, 201, 111);
 
     private final JButton[][] squares =
